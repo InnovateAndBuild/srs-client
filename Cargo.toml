@@ -1,8 +1,22 @@
 [package]
 name = "srs-client"
 version = "0.1.0"
+description = "Provides bindings for the main functionalities of the SRS"
+authors = ["Serhii Khalymon <serhii.khalymon@pm.me>"]
 edition = "2021"
-publish = false
+readme = "README.md"
+license-file = "LICENSE.md"
+repository = "https://github.com/InnovateAndBuild/srs-client"
+documentation = "https://docs.rs/srs-client"
+keywords = ["SRS", "callback", "API", "client"]
+categories = ["web-programming::http-client"]
+
+[package.metadata.release]
+allow-branch = ["main"]
+pre-release-hook = ["git-cliff", "-o", "CHANGELOG.md", "--tag", "{{version}}"]
+pre-release-replacements = [
+    {file="README.md", search="v[0-9]+\\.[0-9]+\\.[0-9]+", replace="v{{version}}"},
+]
 
 [dependencies]
 derive_more = "0.99"
@@ -12,5 +26,4 @@ tracing = "0.1"
 url = "2.5"
 
 [dev-dependencies]
-actix-web = { version = "4.5" }
 tokio = { version = "1.36", features = ["full"] }
