@@ -1,7 +1,7 @@
 SRS Client
 ==========
 
-[![srs-client](https://img.shields.io/badge/v0.1.0-blue) v0.1.0](https://github.com/InnovateAndBuild/srs-client/tree/v0.1.0) ([changelog](https://github.com/InnovateAndBuild/srs-client/blob/master/CHANGELOG.md))
+[![srs-client](https://img.shields.io/badge/v0.2.0-blue) v0.2.0](https://github.com/InnovateAndBuild/srs-client/tree/v0.2.0) ([changelog](https://github.com/InnovateAndBuild/srs-client/blob/master/CHANGELOG.md))
 
 The [SRS (Simple RTMP Server)][1] [Rust] Client or [srs-client][2] is a [Rust] package that provides bindings for the main functionalities of the SRS server. It supports two modes of operation:
 

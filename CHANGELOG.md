@@ -3,17 +3,20 @@ Gst Client changelog
 
 All notable changes to this project will be documented in this file.
 
-## [Unreleased]: /../../tree/HEAD
+## [0.2.0] · 2024-07-20
+[0.2.0]: /../../tree/0.2.0
+
+[Diff](/../../compare/...0.2.0)
 
 ### ⚙️ Miscellaneous Tasks
 
 - Add CI with tests ([196743f])
-- Prepare for release ([906d8bc])
+- Prepare for release ([dd30b8d])
 
 
 
 [196743f]: /../../commit/196743f1293221b1d81fa8dab14d6b1dc601955f
-[906d8bc]: /../../commit/906d8bce30fc485d549ab1bc58419386855c4122
+[dd30b8d]: /../../commit/dd30b8d0af413af526d2366fb2f6da8d34af7f25
 
 
 

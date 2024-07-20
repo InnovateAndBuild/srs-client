@@ -1,6 +1,6 @@
 [package]
 name = "srs-client"
-version = "0.1.0"
+version = "0.2.0"
 description = "Provides bindings for the main functionalities of the SRS"
 authors = ["Serhii Khalymon <serhii.khalymon@pm.me>"]
 edition = "2021"
