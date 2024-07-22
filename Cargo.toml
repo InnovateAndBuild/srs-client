@@ -2,11 +2,11 @@
 name = "srs-client"
 version = "0.2.0"
 description = "Provides bindings for the main functionalities of the SRS"
-authors = ["Serhii Khalymon <serhii.khalymon@pm.me>"]
+authors = ["Serhii Khalymon <serhii@fluxomnia.systems>"]
 edition = "2021"
 readme = "README.md"
-license-file = "LICENSE.md"
-repository = "https://github.com/InnovateAndBuild/srs-client"
+license = "MIT OR Apache-2.0"
+repository = "https://github.com/fluxomnia-systems/srs-client"
 documentation = "https://docs.rs/srs-client"
 keywords = ["SRS", "callback", "API", "client"]
 categories = ["web-programming::http-client"]
@@ -16,6 +16,7 @@ allow-branch = ["main"]
 pre-release-hook = ["git-cliff", "-o", "CHANGELOG.md", "--tag", "{{version}}"]
 pre-release-replacements = [
     {file="README.md", search="v[0-9]+\\.[0-9]+\\.[0-9]+", replace="v{{version}}"},
+    {file="README.md", search="[0-9]+\\.[0-9]+\\.[0-9]+", replace="{{version}}"},
 ]
 
 [dependencies]
