@@ -3,6 +3,29 @@ SRS Client changelog
 
 All notable changes to this project will be documented in this file.
 
+## [0.2.2] · 2026-05-17
+[0.2.2]: /../../tree/v0.2.2
+
+[Diff](/../../compare/v0.2.1...v0.2.2)
+
+### 🚀 Features
+
+- Export SrsClientRespData ([b2cfa2b])
+- Add typed stream list API ([8407446])
+
+### 📚 Documentation
+
+- Update repository links for Fluxomnia Systems ([c0d09ff])
+
+
+
+[c0d09ff]: /../../commit/c0d09ff0711e3ac540fff3af71cb654a2bf0a890
+[b2cfa2b]: /../../commit/b2cfa2b86cf1bb2b301fbf8310afa73cc320fc65
+[8407446]: /../../commit/8407446c83630bce572542bf3ac5a18f0595889a
+
+
+
+
 ## [0.2.1] · 2025-12-07
 [0.2.1]: /../../tree/v0.2.1
 

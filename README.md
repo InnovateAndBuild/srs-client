@@ -1,7 +1,7 @@
 SRS Client
 ==========
 
-[![srs-client](https://img.shields.io/badge/v0.2.1-blue) v0.2.1](https://github.com/fluxomnia-systems/srs-client/tree/v0.2.1) ([changelog](https://github.com/fluxomnia-systems/srs-client/blob/main/CHANGELOG.md))
+[![srs-client](https://img.shields.io/badge/v0.2.2-blue) v0.2.2](https://github.com/fluxomnia-systems/srs-client/tree/v0.2.2) ([changelog](https://github.com/fluxomnia-systems/srs-client/blob/main/CHANGELOG.md))
 
 The [SRS (Simple RTMP Server)][1] [Rust] Client or [srs-client][2] is a [Rust] package that provides bindings for the main functionalities of the SRS server. It supports two modes of operation:
 
@@ -81,7 +81,7 @@ Add this to your `Cargo.toml`:
 
 ```toml
 [dependencies]
-srs-client = "0.2.1"
+srs-client = "0.2.2"
 ```
 
 ## Contributing
