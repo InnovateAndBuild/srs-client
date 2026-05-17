@@ -3,6 +3,35 @@ SRS Client changelog
 
 All notable changes to this project will be documented in this file.
 
+## [0.3.0] · 2026-05-17
+[0.3.0]: /../../tree/v0.3.0
+
+[Diff](/../../compare/v0.2.2...v0.3.0)
+
+### 🚀 Features
+
+- Add resource lookup and pagination APIs ([8c8d5f0])
+- Add typed resource response helpers ([467255f])
+- Add typed summary API ([2ce6644])
+- Add requests and configs APIs ([3d576df])
+- Report unexpected typed responses ([0f11001])
+
+### 🐛 Bug Fixes
+
+- Deserialize active stream media metadata ([9b71c00])
+
+
+
+[9b71c00]: /../../commit/9b71c001d21430488d720b5b450537832bc0ec5d
+[8c8d5f0]: /../../commit/8c8d5f0fc42b4a83af12d5f7a0d4f6ebbc35f885
+[467255f]: /../../commit/467255fb743049807b92270aab1bb4814674f31e
+[2ce6644]: /../../commit/2ce6644a5f879f8daa4cfadbb00e3a1fb4358194
+[3d576df]: /../../commit/3d576dfa0cc95aa668521f316fc906c961682abb
+[0f11001]: /../../commit/0f11001fb4ad80e73ac8a9ef98ed66b5f7343045
+
+
+
+
 ## [0.2.2] · 2026-05-17
 [0.2.2]: /../../tree/v0.2.2
 
