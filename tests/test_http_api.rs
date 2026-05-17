@@ -182,3 +182,36 @@ fn test_summary_response() -> Result<(), Box<dyn std::error::Error>> {
 
     Ok(())
 }
+
+#[test]
+fn test_requests_and_configs_responses() -> Result<(), Box<dyn std::error::Error>> {
+    let response: SrsClientResp = serde_json::from_str(include_str!("fixtures/srs-requests.json"))?;
+    match response.data {
+        SrsClientRespData::Summary(summary) => {
+            assert_eq!(summary.urls.requests, "the request itself, for http debug");
+            assert_eq!(summary.tests.requests, "show the request info");
+            assert_eq!(
+                summary.tests.vhost,
+                "http vhost for http://error.srs.com:1985/api/v1/tests/errors"
+            );
+        }
+        _ => panic!("expected requests summary response"),
+    }
+
+    let response: SrsClientResp = serde_json::from_str(include_str!("fixtures/srs-configs.json"))?;
+    match response.data {
+        SrsClientRespData::Summary(summary) => {
+            assert_eq!(
+                summary.urls.raw,
+                "raw api for srs, support CUID srs for instance the config"
+            );
+            assert_eq!(
+                summary.tests.redirects,
+                "always redirect to /api/v1/test/errors"
+            );
+        }
+        _ => panic!("expected configs summary response"),
+    }
+
+    Ok(())
+}

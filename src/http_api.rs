@@ -148,6 +148,56 @@ impl SrsClient {
         }
     }
 
+    /// Retrieves the HTTP request debug API description.
+    ///
+    /// # Errors
+    ///
+    /// If API request cannot be performed, or fails. See [`SrsClientError`](enum@SrsClientError)
+    /// for details.
+    pub async fn get_requests(self) -> Result<SrsClientResp, SrsClientError> {
+        let resp = self.get("requests").await?;
+        self.process_resp(resp).await
+    }
+
+    /// Retrieves the HTTP request debug API description as typed summary data.
+    ///
+    /// # Errors
+    ///
+    /// If API request cannot be performed, or fails. See [`SrsClientError`](enum@SrsClientError)
+    /// for details.
+    pub async fn get_requests_summary(self) -> Result<Option<Summary>, SrsClientError> {
+        let response = self.get_requests().await?;
+        match response.data {
+            SrsClientRespData::Summary(summary) => Ok(Some(summary)),
+            _ => Ok(None),
+        }
+    }
+
+    /// Retrieves the SRS config API description.
+    ///
+    /// # Errors
+    ///
+    /// If API request cannot be performed, or fails. See [`SrsClientError`](enum@SrsClientError)
+    /// for details.
+    pub async fn get_configs(self) -> Result<SrsClientResp, SrsClientError> {
+        let resp = self.get("configs").await?;
+        self.process_resp(resp).await
+    }
+
+    /// Retrieves the SRS config API description as typed summary data.
+    ///
+    /// # Errors
+    ///
+    /// If API request cannot be performed, or fails. See [`SrsClientError`](enum@SrsClientError)
+    /// for details.
+    pub async fn get_configs_summary(self) -> Result<Option<Summary>, SrsClientError> {
+        let response = self.get_configs().await?;
+        match response.data {
+            SrsClientRespData::Summary(summary) => Ok(Some(summary)),
+            _ => Ok(None),
+        }
+    }
+
     /// Manages all vhosts or a specified vhost.
     ///
     /// # Errors

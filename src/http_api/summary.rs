@@ -1,5 +1,9 @@
 use serde::{Deserialize, Serialize};
 
+fn default_vhost_key() -> String {
+    String::new()
+}
+
 #[derive(Serialize, Deserialize, Debug)]
 pub struct Summary {
     pub urls: Box<Urls>,
@@ -12,6 +16,9 @@ pub struct Tests {
     pub requests: String,
     pub errors: String,
     pub redirects: String,
+    #[serde(rename = "[vhost]", default = "default_vhost_key")]
+    pub vhost: String,
+    #[serde(default = "default_vhost_key")]
     pub _vhost: String,
 }
 
