@@ -1,4 +1,4 @@
-use srs_client::{SrsClient, SrsClientError, SrsClientResp};
+use srs_client::{SrsClient, SrsClientError, SrsClientResp, SrsClientRespData};
 use std::env;
 use tokio;
 
@@ -88,5 +88,32 @@ async fn test_get_meminfos() -> Result<(), Box<dyn std::error::Error>> {
     let client = SrsClient::build(&srs_http_api_url)?;
     let result: Result<SrsClientResp, SrsClientError> = client.get_meminfos().await;
     assert!(result.is_ok());
+    Ok(())
+}
+
+#[test]
+fn test_active_stream_response_with_media_metadata() -> Result<(), Box<dyn std::error::Error>> {
+    let response: SrsClientResp = serde_json::from_str(include_str!("fixtures/srs-streams.json"))?;
+
+    match response.data {
+        SrsClientRespData::Streams { streams } => {
+            assert_eq!(streams.len(), 2);
+
+            let video = streams[0].video.as_ref().expect("video metadata");
+            assert_eq!(video.codec, "H264");
+            assert_eq!(video.profile, "High");
+            assert_eq!(video.level, "3.2");
+            assert_eq!(video.width, 1280);
+            assert_eq!(video.height, 720);
+
+            let audio = streams[0].audio.as_ref().expect("audio metadata");
+            assert_eq!(audio.codec, "AAC");
+            assert_eq!(audio.sample_rate, 44100);
+            assert_eq!(audio.channel, 2);
+            assert_eq!(audio.profile, "LC");
+        }
+        _ => panic!("expected streams response"),
+    }
+
     Ok(())
 }
