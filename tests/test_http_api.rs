@@ -117,3 +117,50 @@ fn test_active_stream_response_with_media_metadata() -> Result<(), Box<dyn std::
 
     Ok(())
 }
+
+#[test]
+fn test_single_resource_responses() -> Result<(), Box<dyn std::error::Error>> {
+    let response: SrsClientResp = serde_json::from_str(include_str!("fixtures/srs-stream.json"))?;
+    match response.data {
+        SrsClientRespData::Stream { stream } => {
+            assert_eq!(stream.id, "vid-c99a4wx");
+            assert_eq!(stream.publish.cid.as_deref(), Some("nf14l8c0"));
+        }
+        _ => panic!("expected stream response"),
+    }
+
+    let response: SrsClientResp = serde_json::from_str(include_str!("fixtures/srs-client.json"))?;
+    match response.data {
+        SrsClientRespData::Client { client } => {
+            assert_eq!(client.id, "206sj057");
+            assert_eq!(client.r#type, "fmle-publish");
+        }
+        _ => panic!("expected client response"),
+    }
+
+    let response: SrsClientResp = serde_json::from_str(include_str!("fixtures/srs-vhost.json"))?;
+    match response.data {
+        SrsClientRespData::Vhost { vhost } => {
+            assert_eq!(vhost.id, "vid-ibe77pd");
+            assert_eq!(vhost.hls.fragment, Some(1.0));
+        }
+        _ => panic!("expected vhost response"),
+    }
+
+    Ok(())
+}
+
+#[test]
+fn test_vhost_list_response() -> Result<(), Box<dyn std::error::Error>> {
+    let response: SrsClientResp = serde_json::from_str(include_str!("fixtures/srs-vhosts.json"))?;
+
+    match response.data {
+        SrsClientRespData::Vhosts { vhosts } => {
+            assert_eq!(vhosts.len(), 1);
+            assert_eq!(vhosts[0].hls.fragment, Some(1.0));
+        }
+        _ => panic!("expected vhosts response"),
+    }
+
+    Ok(())
+}

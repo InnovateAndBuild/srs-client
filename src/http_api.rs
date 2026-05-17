@@ -17,11 +17,14 @@ mod summary;
 mod system_proc_stats;
 mod vhost;
 
+pub use client::Client;
+pub use common::{Hls, Kbps, Publish};
 pub use error::SrsClientError;
 pub use response::{SrsClientResp, SrsClientRespData};
-pub use stream::Stream;
+pub use stream::{Audio, Stream, Video};
+pub use vhost::Vhost;
 
-use reqwest::{Client, Response as ReqwestResponse};
+use reqwest::{Client as ReqwestClient, Response as ReqwestResponse};
 use url::Url;
 
 /// Client for performing requests to [HTTP API][1] of spawned [SRS].
@@ -30,7 +33,7 @@ use url::Url;
 /// [1]: https://ossrs.io/lts/en-us/docs/v5/doc/http-api
 #[derive(Clone, Debug)]
 pub struct SrsClient {
-    http_client: Client,
+    http_client: ReqwestClient,
     base_url: Url,
 }
 
@@ -49,7 +52,7 @@ impl SrsClient {
             .map_err(SrsClientError::IncorrectBaseUrl)?;
         tracing::debug!("base_url: {base_url}");
         Ok(Self {
-            http_client: Client::new(),
+            http_client: ReqwestClient::new(),
             base_url,
         })
     }
@@ -141,6 +144,37 @@ impl SrsClient {
         self.process_resp(resp).await
     }
 
+    /// Retrieves all vhosts as a typed list.
+    ///
+    /// # Errors
+    ///
+    /// If API request cannot be performed, or fails. See [`SrsClientError`](enum@SrsClientError)
+    /// for details.
+    pub async fn get_vhost_list(self) -> Result<Vec<Vhost>, SrsClientError> {
+        let response = self.get_vhosts().await?;
+        match response.data {
+            SrsClientRespData::Vhosts { vhosts } => Ok(vhosts),
+            _ => Ok(Vec::new()),
+        }
+    }
+
+    /// Retrieves a specified vhost as a typed item.
+    ///
+    /// # Errors
+    ///
+    /// If API request cannot be performed, or fails. See [`SrsClientError`](enum@SrsClientError)
+    /// for details.
+    pub async fn get_vhost_item<T: Into<String>>(
+        self,
+        id: T,
+    ) -> Result<Option<Vhost>, SrsClientError> {
+        let response = self.get_vhost(id).await?;
+        match response.data {
+            SrsClientRespData::Vhost { vhost } => Ok(Some(vhost)),
+            _ => Ok(None),
+        }
+    }
+
     /// Manages all streams or a specified stream.
     ///
     /// # Errors
@@ -194,6 +228,41 @@ impl SrsClient {
         }
     }
 
+    /// Retrieves a paginated stream response as a typed list.
+    ///
+    /// # Errors
+    ///
+    /// If API request cannot be performed, or fails. See [`SrsClientError`](enum@SrsClientError)
+    /// for details.
+    pub async fn get_stream_page_list(
+        self,
+        start: i64,
+        count: i64,
+    ) -> Result<Vec<Stream>, SrsClientError> {
+        let response = self.get_streams_page(start, count).await?;
+        match response.data {
+            SrsClientRespData::Streams { streams } => Ok(streams),
+            _ => Ok(Vec::new()),
+        }
+    }
+
+    /// Retrieves a specified stream as a typed item.
+    ///
+    /// # Errors
+    ///
+    /// If API request cannot be performed, or fails. See [`SrsClientError`](enum@SrsClientError)
+    /// for details.
+    pub async fn get_stream_item<T: Into<String>>(
+        self,
+        id: T,
+    ) -> Result<Option<Stream>, SrsClientError> {
+        let response = self.get_stream(id).await?;
+        match response.data {
+            SrsClientRespData::Stream { stream } => Ok(Some(stream)),
+            _ => Ok(None),
+        }
+    }
+
     /// Manages all clients or a specified client, default query top 10 clients.
     ///
     /// # Errors
@@ -231,6 +300,55 @@ impl SrsClient {
     pub async fn get_client<T: Into<String>>(self, id: T) -> Result<SrsClientResp, SrsClientError> {
         let resp = self.get(&format!("clients/{}", id.into())).await?;
         self.process_resp(resp).await
+    }
+
+    /// Retrieves all clients as a typed list.
+    ///
+    /// # Errors
+    ///
+    /// If API request cannot be performed, or fails. See [`SrsClientError`](enum@SrsClientError)
+    /// for details.
+    pub async fn get_client_list(self) -> Result<Vec<Client>, SrsClientError> {
+        let response = self.get_clients().await?;
+        match response.data {
+            SrsClientRespData::Clients { clients } => Ok(clients),
+            _ => Ok(Vec::new()),
+        }
+    }
+
+    /// Retrieves a paginated client response as a typed list.
+    ///
+    /// # Errors
+    ///
+    /// If API request cannot be performed, or fails. See [`SrsClientError`](enum@SrsClientError)
+    /// for details.
+    pub async fn get_client_page_list(
+        self,
+        start: i64,
+        count: i64,
+    ) -> Result<Vec<Client>, SrsClientError> {
+        let response = self.get_clients_page(start, count).await?;
+        match response.data {
+            SrsClientRespData::Clients { clients } => Ok(clients),
+            _ => Ok(Vec::new()),
+        }
+    }
+
+    /// Retrieves a specified client as a typed item.
+    ///
+    /// # Errors
+    ///
+    /// If API request cannot be performed, or fails. See [`SrsClientError`](enum@SrsClientError)
+    /// for details.
+    pub async fn get_client_item<T: Into<String>>(
+        self,
+        id: T,
+    ) -> Result<Option<Client>, SrsClientError> {
+        let response = self.get_client(id).await?;
+        match response.data {
+            SrsClientRespData::Client { client } => Ok(Some(client)),
+            _ => Ok(None),
+        }
     }
 
     /// Retrieves the supported features of SRS.

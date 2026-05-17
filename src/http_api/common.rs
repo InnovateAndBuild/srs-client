@@ -10,11 +10,13 @@ pub struct Kbps {
 #[derive(Serialize, Deserialize, Debug)]
 pub struct Hls {
     pub enabled: bool,
+    pub fragment: Option<f64>,
 }
 
 #[derive(Serialize, Deserialize, Debug)]
 pub struct Publish {
     pub active: bool,
+    pub cid: Option<String>,
 }
 
 #[allow(clippy::struct_field_names)]

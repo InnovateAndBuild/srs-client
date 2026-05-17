@@ -1,0 +1,1 @@
+{"code":0,"server":"vid-94x3q96","service":"36s74dcl","pid":"23","vhosts":[{"id":"vid-ibe77pd","name":"__defaultVhost__","enabled":true,"clients":6,"streams":2,"send_bytes":7044697407,"recv_bytes":3371627239,"kbps":{"recv_30s":12321,"send_30s":25663},"hls":{"enabled":true,"fragment":1.00}}]}

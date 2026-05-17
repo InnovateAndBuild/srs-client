@@ -26,8 +26,11 @@ pub struct SrsClientResp {
 #[derive(Serialize, Deserialize, Debug)]
 #[serde(untagged)]
 pub enum SrsClientRespData {
+    Stream { stream: Stream },
     Streams { streams: Vec<Stream> },
+    Client { client: Client },
     Clients { clients: Vec<Client> },
+    Vhost { vhost: Vhost },
     Vhosts { vhosts: Vec<Vhost> },
     Summary { urls: Box<Urls>, tests: Tests },
     Version { data: Version },

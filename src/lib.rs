@@ -8,5 +8,8 @@ mod http_api;
 
 pub use crate::{
     callback_api::{SrsCallbackEvent, SrsCallbackReq},
-    http_api::{SrsClient, SrsClientError, SrsClientResp, SrsClientRespData, Stream},
+    http_api::{
+        Audio, Client, Hls, Kbps, Publish, SrsClient, SrsClientError, SrsClientResp,
+        SrsClientRespData, Stream, Vhost, Video,
+    },
 };
