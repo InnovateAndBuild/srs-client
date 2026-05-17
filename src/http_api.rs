@@ -19,6 +19,7 @@ mod vhost;
 
 pub use error::SrsClientError;
 pub use response::{SrsClientResp, SrsClientRespData};
+pub use stream::Stream;
 
 use reqwest::{Client, Response as ReqwestResponse};
 use url::Url;
@@ -138,6 +139,20 @@ impl SrsClient {
     pub async fn get_streams(self) -> Result<SrsClientResp, SrsClientError> {
         let resp = self.get("streams").await?;
         self.process_resp(resp).await
+    }
+
+    /// Retrieves all streams as a typed list.
+    ///
+    /// # Errors
+    ///
+    /// If API request cannot be performed, or fails. See [`SrsClientError`](enum@SrsClientError)
+    /// for details.
+    pub async fn get_stream_list(self) -> Result<Vec<Stream>, SrsClientError> {
+        let response = self.get_streams().await?;
+        match response.data {
+            SrsClientRespData::Streams { streams } => Ok(streams),
+            _ => Ok(Vec::new()),
+        }
     }
 
     /// Manages all clients or a specified client, default query top 10 clients.
