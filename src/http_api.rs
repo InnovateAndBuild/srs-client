@@ -130,6 +130,17 @@ impl SrsClient {
         self.process_resp(resp).await
     }
 
+    /// Manages a specified vhost.
+    ///
+    /// # Errors
+    ///
+    /// If API request cannot be performed, or fails. See [`SrsClientError`](enum@SrsClientError)
+    /// for details.
+    pub async fn get_vhost<T: Into<String>>(self, id: T) -> Result<SrsClientResp, SrsClientError> {
+        let resp = self.get(&format!("vhosts/{}", id.into())).await?;
+        self.process_resp(resp).await
+    }
+
     /// Manages all streams or a specified stream.
     ///
     /// # Errors
@@ -138,6 +149,34 @@ impl SrsClient {
     /// for details.
     pub async fn get_streams(self) -> Result<SrsClientResp, SrsClientError> {
         let resp = self.get("streams").await?;
+        self.process_resp(resp).await
+    }
+
+    /// Manages all streams using SRS pagination.
+    ///
+    /// # Errors
+    ///
+    /// If API request cannot be performed, or fails. See [`SrsClientError`](enum@SrsClientError)
+    /// for details.
+    pub async fn get_streams_page(
+        self,
+        start: i64,
+        count: i64,
+    ) -> Result<SrsClientResp, SrsClientError> {
+        let resp = self
+            .get(&format!("streams?start={start}&count={count}"))
+            .await?;
+        self.process_resp(resp).await
+    }
+
+    /// Manages a specified stream.
+    ///
+    /// # Errors
+    ///
+    /// If API request cannot be performed, or fails. See [`SrsClientError`](enum@SrsClientError)
+    /// for details.
+    pub async fn get_stream<T: Into<String>>(self, id: T) -> Result<SrsClientResp, SrsClientError> {
+        let resp = self.get(&format!("streams/{}", id.into())).await?;
         self.process_resp(resp).await
     }
 
@@ -163,6 +202,34 @@ impl SrsClient {
     /// for details.
     pub async fn get_clients(self) -> Result<SrsClientResp, SrsClientError> {
         let resp = self.get("clients").await?;
+        self.process_resp(resp).await
+    }
+
+    /// Manages all clients using SRS pagination.
+    ///
+    /// # Errors
+    ///
+    /// If API request cannot be performed, or fails. See [`SrsClientError`](enum@SrsClientError)
+    /// for details.
+    pub async fn get_clients_page(
+        self,
+        start: i64,
+        count: i64,
+    ) -> Result<SrsClientResp, SrsClientError> {
+        let resp = self
+            .get(&format!("clients?start={start}&count={count}"))
+            .await?;
+        self.process_resp(resp).await
+    }
+
+    /// Manages a specified client.
+    ///
+    /// # Errors
+    ///
+    /// If API request cannot be performed, or fails. See [`SrsClientError`](enum@SrsClientError)
+    /// for details.
+    pub async fn get_client<T: Into<String>>(self, id: T) -> Result<SrsClientResp, SrsClientError> {
+        let resp = self.get(&format!("clients/{}", id.into())).await?;
         self.process_resp(resp).await
     }
 
