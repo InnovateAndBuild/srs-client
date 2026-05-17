@@ -1,14 +1,7 @@
 use crate::http_api::{
-    client::Client,
-    common::Version,
-    feature::FeaturesData,
-    meminfos::MemInfos,
-    rusages::Rusages,
-    self_proc_stats::SelfProcStats,
-    stream::Stream,
-    summary::{Tests, Urls},
-    system_proc_stats::SystemProcStats,
-    vhost::Vhost,
+    client::Client, common::Version, feature::FeaturesData, meminfos::MemInfos, rusages::Rusages,
+    self_proc_stats::SelfProcStats, stream::Stream, summary::Summary,
+    system_proc_stats::SystemProcStats, vhost::Vhost,
 };
 use derive_more::{Display, Error};
 use serde::{Deserialize, Serialize};
@@ -32,7 +25,7 @@ pub enum SrsClientRespData {
     Clients { clients: Vec<Client> },
     Vhost { vhost: Vhost },
     Vhosts { vhosts: Vec<Vhost> },
-    Summary { urls: Box<Urls>, tests: Tests },
+    Summary(Summary),
     Version { data: Version },
     Feature { data: FeaturesData },
     Rusages { data: Rusages },

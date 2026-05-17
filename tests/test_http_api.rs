@@ -164,3 +164,21 @@ fn test_vhost_list_response() -> Result<(), Box<dyn std::error::Error>> {
 
     Ok(())
 }
+
+#[test]
+fn test_summary_response() -> Result<(), Box<dyn std::error::Error>> {
+    let response: SrsClientResp = serde_json::from_str(include_str!("fixtures/srs-summary.json"))?;
+
+    match response.data {
+        SrsClientRespData::Summary(summary) => {
+            assert_eq!(
+                summary.urls.streams,
+                "manage all streams or specified stream"
+            );
+            assert_eq!(summary.tests.requests, "ok");
+        }
+        _ => panic!("expected summary response"),
+    }
+
+    Ok(())
+}

@@ -22,6 +22,7 @@ pub use common::{Hls, Kbps, Publish};
 pub use error::SrsClientError;
 pub use response::{SrsClientResp, SrsClientRespData};
 pub use stream::{Audio, Stream, Video};
+pub use summary::{Summary, Tests, Urls};
 pub use vhost::Vhost;
 
 use reqwest::{Client as ReqwestClient, Response as ReqwestResponse};
@@ -120,6 +121,31 @@ impl SrsClient {
     pub async fn get_version(self) -> Result<SrsClientResp, SrsClientError> {
         let resp = self.get("versions").await?;
         self.process_resp(resp).await
+    }
+
+    /// Retrieves the server summary.
+    ///
+    /// # Errors
+    ///
+    /// If API request cannot be performed, or fails. See [`SrsClientError`](enum@SrsClientError)
+    /// for details.
+    pub async fn get_summaries(self) -> Result<SrsClientResp, SrsClientError> {
+        let resp = self.get("summaries").await?;
+        self.process_resp(resp).await
+    }
+
+    /// Retrieves the server summary as typed data.
+    ///
+    /// # Errors
+    ///
+    /// If API request cannot be performed, or fails. See [`SrsClientError`](enum@SrsClientError)
+    /// for details.
+    pub async fn get_summary(self) -> Result<Option<Summary>, SrsClientError> {
+        let response = self.get_summaries().await?;
+        match response.data {
+            SrsClientRespData::Summary(summary) => Ok(Some(summary)),
+            _ => Ok(None),
+        }
     }
 
     /// Manages all vhosts or a specified vhost.

@@ -10,6 +10,6 @@ pub use crate::{
     callback_api::{SrsCallbackEvent, SrsCallbackReq},
     http_api::{
         Audio, Client, Hls, Kbps, Publish, SrsClient, SrsClientError, SrsClientResp,
-        SrsClientRespData, Stream, Vhost, Video,
+        SrsClientRespData, Stream, Summary, Tests, Urls, Vhost, Video,
     },
 };

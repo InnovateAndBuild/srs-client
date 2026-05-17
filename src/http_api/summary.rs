@@ -1,6 +1,12 @@
 use serde::{Deserialize, Serialize};
 
 #[derive(Serialize, Deserialize, Debug)]
+pub struct Summary {
+    pub urls: Box<Urls>,
+    pub tests: Tests,
+}
+
+#[derive(Serialize, Deserialize, Debug)]
 #[allow(clippy::pub_underscore_fields)]
 pub struct Tests {
     pub requests: String,
