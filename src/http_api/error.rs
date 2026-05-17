@@ -35,4 +35,8 @@ pub enum SrsClientError {
     /// [`SrsClient`]: crate::SrsClient
     #[display(fmt = "Failed to parse URL: {_0}")]
     IncorrectApiUrl(url::ParseError),
+
+    /// SRS HTTP API returned a valid response with an unexpected shape.
+    #[display(fmt = "SRS HTTP API returned unexpected response, expected: {_0}")]
+    UnexpectedResponse(#[error(not(source))] &'static str),
 }

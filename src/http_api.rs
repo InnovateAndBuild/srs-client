@@ -144,7 +144,7 @@ impl SrsClient {
         let response = self.get_summaries().await?;
         match response.data {
             SrsClientRespData::Summary(summary) => Ok(Some(summary)),
-            _ => Ok(None),
+            _ => Err(SrsClientError::UnexpectedResponse("summary")),
         }
     }
 
@@ -169,7 +169,7 @@ impl SrsClient {
         let response = self.get_requests().await?;
         match response.data {
             SrsClientRespData::Summary(summary) => Ok(Some(summary)),
-            _ => Ok(None),
+            _ => Err(SrsClientError::UnexpectedResponse("requests summary")),
         }
     }
 
@@ -194,7 +194,7 @@ impl SrsClient {
         let response = self.get_configs().await?;
         match response.data {
             SrsClientRespData::Summary(summary) => Ok(Some(summary)),
-            _ => Ok(None),
+            _ => Err(SrsClientError::UnexpectedResponse("configs summary")),
         }
     }
 
@@ -230,7 +230,7 @@ impl SrsClient {
         let response = self.get_vhosts().await?;
         match response.data {
             SrsClientRespData::Vhosts { vhosts } => Ok(vhosts),
-            _ => Ok(Vec::new()),
+            _ => Err(SrsClientError::UnexpectedResponse("vhosts")),
         }
     }
 
@@ -247,7 +247,7 @@ impl SrsClient {
         let response = self.get_vhost(id).await?;
         match response.data {
             SrsClientRespData::Vhost { vhost } => Ok(Some(vhost)),
-            _ => Ok(None),
+            _ => Err(SrsClientError::UnexpectedResponse("vhost")),
         }
     }
 
@@ -300,7 +300,7 @@ impl SrsClient {
         let response = self.get_streams().await?;
         match response.data {
             SrsClientRespData::Streams { streams } => Ok(streams),
-            _ => Ok(Vec::new()),
+            _ => Err(SrsClientError::UnexpectedResponse("streams")),
         }
     }
 
@@ -318,7 +318,7 @@ impl SrsClient {
         let response = self.get_streams_page(start, count).await?;
         match response.data {
             SrsClientRespData::Streams { streams } => Ok(streams),
-            _ => Ok(Vec::new()),
+            _ => Err(SrsClientError::UnexpectedResponse("streams page")),
         }
     }
 
@@ -335,7 +335,7 @@ impl SrsClient {
         let response = self.get_stream(id).await?;
         match response.data {
             SrsClientRespData::Stream { stream } => Ok(Some(stream)),
-            _ => Ok(None),
+            _ => Err(SrsClientError::UnexpectedResponse("stream")),
         }
     }
 
@@ -388,7 +388,7 @@ impl SrsClient {
         let response = self.get_clients().await?;
         match response.data {
             SrsClientRespData::Clients { clients } => Ok(clients),
-            _ => Ok(Vec::new()),
+            _ => Err(SrsClientError::UnexpectedResponse("clients")),
         }
     }
 
@@ -406,7 +406,7 @@ impl SrsClient {
         let response = self.get_clients_page(start, count).await?;
         match response.data {
             SrsClientRespData::Clients { clients } => Ok(clients),
-            _ => Ok(Vec::new()),
+            _ => Err(SrsClientError::UnexpectedResponse("clients page")),
         }
     }
 
@@ -423,7 +423,7 @@ impl SrsClient {
         let response = self.get_client(id).await?;
         match response.data {
             SrsClientRespData::Client { client } => Ok(Some(client)),
-            _ => Ok(None),
+            _ => Err(SrsClientError::UnexpectedResponse("client")),
         }
     }
 
